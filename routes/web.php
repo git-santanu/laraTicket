@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ticketController;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,13 @@ require __DIR__.'/auth.php';
 
 // Route::get('/',[ticketController::class,'index']);
 Route::resource('ticket',ticketController::class);
+Route::get('/addRoles',function(){
+    $roles = [
+        ['name' => 'admin','guard_name'=>'web'],
+        ['name' => 'user','guard_name'=>'web'],
+        ['name' => 'agent','guard_name'=>'web'],
+        ['name' => 'client','guard_name'=>'web'],
+    ];
+    $role = Role::insert($roles);
+    return "Succedd";
+});

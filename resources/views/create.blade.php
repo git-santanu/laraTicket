@@ -24,6 +24,22 @@
       <textarea type="text" class="form-control" id="description" name="description" rows="5"></textarea>
     </div>
     <div class="form-group">
+      <label for="description">Ticket type</label>
+      <select name="types" id="types" class="form-control">
+        @foreach($types as $type)
+         <option value="{{$type['value']}}">{{$type['label']}}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="description">Assign to</label>
+      <select name="roles" id="roles" class="form-control">
+        @foreach($roles as $role)
+         <option value="{{$role['value']}}">{{$role['label']}}</option>
+        @endforeach
+      </select>
+    </div>
+    <div class="form-group">
       <label for="description">Status</label>
       <select name="status" id="status" class="form-control">
         @foreach($statuses as $status)

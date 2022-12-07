@@ -16,9 +16,11 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->nullable();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
             $table->string('title');
             $table->string('description')->nullable();
+            $table->enum('types',['Bug','Epic','User stories']);
+            $table->enum('roles',['Admin','Agent','Developer','Client']);
             $table->enum('status',['Open','In progress','In Testing','Close']);
             $table->timestamps();
         });

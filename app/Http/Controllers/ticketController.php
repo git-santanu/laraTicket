@@ -5,9 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class ticketController extends Controller
 {
+    // public $roles;
+    // public function __construct()
+    // {
+    //     $this->roles = Role::all();
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +59,39 @@ class ticketController extends Controller
                 'value' => 'Close'
             ]
         ];
-        return view('create', compact('statuses'));
+        $roles = [
+            [
+                'label' => 'Admin',
+                'value' => 'Admin'
+            ],
+            [
+                'label' => 'Agent',
+                'value' => 'Agent'
+            ],
+            [
+                'label' => 'Developer',
+                'value' => 'Developer'
+            ],
+            [
+                'label' => 'Client',
+                'value' => 'Client'
+            ]
+        ];
+        $types = [
+            [
+                'label' => 'Bug',
+                'value' => 'Bug'
+            ],
+            [
+                'label' => 'Epic',
+                'value' => 'Epic'
+            ],
+            [
+                'label' => 'User stories',
+                'value' => 'User stories'
+            ],
+        ];
+        return view('create', compact('statuses','roles','types'));
     }
 
     /**
@@ -70,6 +108,8 @@ class ticketController extends Controller
         $ticket = new Ticket();
         $ticket->title = $request->title;
         $ticket->description = $request->description;
+        $ticket->types = $request->types;
+        $ticket->roles = $request->roles;
         $ticket->status = $request->status;
         $ticket->save();
         return redirect()->route('ticket.index');
