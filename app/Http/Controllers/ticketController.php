@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ticket;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 class ticketController extends Controller
@@ -103,9 +104,14 @@ class ticketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required'
+            'title' => 'required',
+            'types' => 'required'
         ]);
+        logger($request);
+        logger($request->session()->all());
+        logger(auth()->user());
         $ticket = new Ticket();
+        $ticket->user_id = auth()->user()->id;
         $ticket->title = $request->title;
         $ticket->description = $request->description;
         $ticket->types = $request->types;

@@ -16,7 +16,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany('App\Role', 'user_role', 'user_id', 'role_id');
+        return $this->belongsToMany('App\Role', 'user_role', 'role_id');
     }
 
     /**
@@ -48,7 +48,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function tickets()
+    public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class, 'user_id');
     }

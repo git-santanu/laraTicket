@@ -18,22 +18,37 @@ use Spatie\Permission\Models\Role;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::group(['middleware' => 'auth'], function(){
+    // Route::get('/dashboard', function(){
+    //     return view('dashboard')->name('dashboard');
+    // });
+    Route::resource('ticket',ticketController::class);
+    Route::get('/addRoles',function(){
+        $roles = [
+            ['name' => 'admin','guard_name'=>'web'],
+            ['name' => 'user','guard_name'=>'web'],
+            ['name' => 'agent','guard_name'=>'web'],
+            ['name' => 'client','guard_name'=>'web'],
+        ];
+        $role = Role::insert($roles);
+        return "Succedd";
+    });
+});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
 // Route::get('/',[ticketController::class,'index']);
-Route::resource('ticket',ticketController::class);
-Route::get('/addRoles',function(){
-    $roles = [
-        ['name' => 'admin','guard_name'=>'web'],
-        ['name' => 'user','guard_name'=>'web'],
-        ['name' => 'agent','guard_name'=>'web'],
-        ['name' => 'client','guard_name'=>'web'],
-    ];
-    $role = Role::insert($roles);
-    return "Succedd";
-});
+// Route::resource('ticket',ticketController::class);
+// Route::get('/addRoles',function(){
+//     $roles = [
+//         ['name' => 'admin','guard_name'=>'web'],
+//         ['name' => 'user','guard_name'=>'web'],
+//         ['name' => 'agent','guard_name'=>'web'],
+//         ['name' => 'client','guard_name'=>'web'],
+//     ];
+//     $role = Role::insert($roles);
+//     return "Succedd";
+// });
